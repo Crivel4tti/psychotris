@@ -1,0 +1,47 @@
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris Acadêmico: CBD & Psicologia</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <h1>PSYCHOTRIS</h1>
+        <div class="game-wrapper">
+            <canvas id="tetris-canvas" width="300" height="600"></canvas>
+            <div class="side-panel">
+                <h2>Próxima Peça</h2>
+                <canvas id="next-piece-canvas" width="120" height="120"></canvas>
+                    <div id="score-box">
+                    <h2>Pontuação</h2>
+                    <p id="score">0</p>
+                </div>
+                <div id="info-box">
+                    <p id="info-text">Elimine uma linha para ver um fato educativo aqui!</p>
+                </div>
+                 <div class="controls">
+                    <h2>Controles</h2>
+                    <p><span>&larr;</span> Mover para Esquerda</p>
+                    <p><span>&rarr;</span> Mover para Direita</p>
+                    <p><span>&darr;</span> Acelerar Queda</p>
+                    <p><span>&uarr;</span> Girar Peça</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-over-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>Fim de Jogo</h2>
+            <p>O equilíbrio entre ciência e empatia é o que mantém a linha viva. Recomece com novos conhecimentos.</p>
+            <button id="restart-button">Recomeçar</button>
+        </div>
+    </div>
+
+    <script src="script.js" type="module"></script>
+</body>
+</html>
