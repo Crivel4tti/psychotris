@@ -11,7 +11,7 @@ const bgMusic = document.getElementById('bg-music');
 const COLS = 10;
 const ROWS = 20;
 const BLOCK_SIZE = 30;
-
+const finalScoreElement = document.getElementById('final-score');
 context.canvas.width = COLS * BLOCK_SIZE;
 context.canvas.height = ROWS * BLOCK_SIZE;
 
@@ -340,6 +340,7 @@ function gameOver() {
     gameOverModal.classList.remove('hidden');
     bgMusic.pause();
     bgMusic.currentTime = 0; // reroll
+    finalScoreElement.textContent = "Sua pontuação final foi: " + score + " pontos!";
 }
 
 function restartGame() {
