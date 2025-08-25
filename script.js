@@ -7,7 +7,7 @@ const nextContext = nextCanvas.getContext('2d');
 const infoText = document.getElementById('info-text');
 const gameOverModal = document.getElementById('game-over-modal');
 const restartButton = document.getElementById('restart-button');
-
+const bgMusic = document.getElementById('bg-music');
 const COLS = 10;
 const ROWS = 20;
 const BLOCK_SIZE = 30;
@@ -65,6 +65,9 @@ let nextPiece;
 let animationFrameId;
 let dropCounter = 0;
 let dropInterval = 1000;
+const speedUpPoints = 200;   // 500 pts
+const speedStep = 100;        // less 100 ms
+const minDropInterval = 200; // limit
 let lastTime = 0;
 let isGameOver = false;
 
@@ -266,6 +269,8 @@ function sweepLines() {
         const points = [0, 100, 300, 500, 800]; 
         score += points[linesCleared] || 0;
         scoreElement.textContent = score;
+        // difficult++
+        updateSpeed();
     }
 }
 
@@ -276,6 +281,12 @@ function showRandomFact() {
         infoText.textContent = fact;
         infoText.classList.remove('fade');
     }, 500);
+}
+
+function updateSpeed() {
+    const newDropInterval = 1000 - Math.floor(score / speedUpPoints) * speedStep;
+    dropInterval = Math.max(newDropInterval, minDropInterval);
+    console.log("Nova velocidade:", dropInterval); // debug opcional
 }
 
 function update(time = 0) {
@@ -295,6 +306,10 @@ function update(time = 0) {
 
 
 function handleKeyDown(event) {
+    if (bgMusic.paused) {
+    bgMusic.play().catch(err => console.log("Erro ao tocar música:", err));
+}
+
     if (isGameOver) return;
      if (audioContext && audioContext.state === 'suspended') {
         audioContext.resume();
@@ -323,6 +338,8 @@ function gameOver() {
     isGameOver = true;
     cancelAnimationFrame(animationFrameId);
     gameOverModal.classList.remove('hidden');
+    bgMusic.pause();
+    bgMusic.currentTime = 0; // reroll
 }
 
 function restartGame() {
@@ -334,7 +351,10 @@ function restartGame() {
     infoText.textContent = "Elimine uma linha para ver um fato educativo aqui!";
     gameOverModal.classList.add('hidden');
     update();
+    bgMusic.currentTime = 0;
+    bgMusic.play().catch(err => console.log("Erro ao tocar música:", err));
 }
+
 
 function init() {
     setupAudio();
